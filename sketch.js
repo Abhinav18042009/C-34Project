@@ -11,13 +11,12 @@ function setup() {
   dog.addImage('dog',dog_img);
   dog.scale = 0.2;
   database = firebase.database();
-  foodStock = database.ref('Food');
-  foodStock.on("value",readStock);
+  
 }
 
 
 function draw() {  
-background = color(46, 139, 87);
+background(46, 139, 87);
   drawSprites();
   textSize(30);
   fill("black");
@@ -25,11 +24,18 @@ background = color(46, 139, 87);
   text("PRESS UP ARROW TO FEED BROWNIE MILK",10,100);
   //add styles here
 
+  foodStock = database.ref('Food');
+  foodStock.on("value",readStock);
+
   if(keyWentDown(UP_ARROW)){
     writeStock(foodS);
-    dog.addImage(happyDog_img);
+    dog.addImage('happyDog',happyDog_img);
+  }
+  if(keyWentUp(UP_ARROW)){
+    dog.addImage('dog',dog_img);
   }
 }
+
 
 function readStock(data){
   foodS = data.val();
@@ -45,6 +51,10 @@ function writeStock(x){
     Food:x
   })
 }
+
+
+
+
 
 
 
